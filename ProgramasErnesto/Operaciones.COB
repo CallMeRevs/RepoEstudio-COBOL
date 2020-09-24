@@ -1,0 +1,88 @@
+      ******************************************************************
+      * Author:
+      * Date:
+      * Purpose:
+      * Tectonics: cobc
+      ******************************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. OPERACIONES.
+
+       DATA DIVISION.
+       FILE SECTION.
+       WORKING-STORAGE SECTION.
+       01  NUM1 PIC 9(4).
+       01  NUM2 PIC 9(4).
+       01  NUM3 PIC 99V99 VALUE 10.05.
+       01  COM01 PIC X(40) VALUE "VARIABLE NO EDITADA PARA CALCULAR".
+       01  NUM31 PIC 99.99 VALUE 10.05.
+       01  COM02 PIC X(40) VALUE "VARIABLE EDITADA NO PUEDE CALCULAR".
+       01  NUM4 PIC S9(4) VALUE -9999.
+       01  NUM5 PIC S9(2)V9(2) VALUE -22.54.
+       01  NUM6 PIC Z(4) VALUE 0600.
+       01  COM03 PIC X(40) VALUE "LA Z SUPRIME LOS 0 A LA IZQUIERDA".
+       01  MULTIPLICADOR PIC 9(1).
+       01  RESULTADO PIC 9(5).
+       01  SALUDO PIC XXXX VALUE "HOLA".
+       01  SALUDIN PIC X(4) VALUE "HOLA".
+       01  VARIABLE-COMPUESTA-01.
+           02 VARIABLE-SIMPLE-01 PIC 9 VALUE 3.
+           02 VARIABLE-SIMPLE-02 PIC XXXX VALUE "Hola".
+
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           DISPLAY "INTRODUCE EL PRIMER NUMERO:".
+           ACCEPT NUM1.
+           DISPLAY "INTRODUCE EL SEGUNDO NUMERO:".
+           ACCEPT NUM2.
+           ADD NUM1 TO NUM2 GIVING RESULTADO.
+           DISPLAY "LA SUMA ES: " RESULTADO.
+           SUBTRACT NUM1 FROM NUM2 GIVING RESULTADO.
+           DISPLAY "LA RESTA ES: " RESULTADO.
+           MULTIPLY NUM1 BY NUM2 GIVING RESULTADO.
+           DISPLAY "LA MULTIPLICACION ES: " RESULTADO.
+           DIVIDE NUM1 BY NUM2 GIVING RESULTADO.
+           DISPLAY "LA DIVISION ES: " RESULTADO.
+           COMPUTE RESULTADO = NUM1 * NUM2.
+           DISPLAY "LA MULTIPLCACION ES: " RESULTADO.
+           IF RESULTADO>50
+               DISPLAY "EL RESULTADO ES MAYOR QUE 50."
+           ELSE
+               DISPLAY "EL RESULTADO ES MENOR QUE 50."
+           END-IF.
+           IF RESULTADO = 0
+               PERFORM RUTINA01
+           ELSE
+               PERFORM RUTINA02
+           END-IF.
+           MOVE 1 TO MULTIPLICADOR.
+           PERFORM TABLA 10 TIMES.
+           MOVE 1 TO MULTIPLICADOR.
+           PERFORM TABLA UNTIL MULTIPLICADOR > 10.
+           PERFORM VARYING MULTIPLICADOR FROM 1 BY 1
+               UNTIL MULTIPLICADOR > 10
+           END-PERFORM.
+           GO TO FINALIZA-PROGRAMA.
+           DISPLAY "ESTO NO SE EJECUTARA.".
+           DISPLAY "ESTO TAMPOCO.".
+           EVALUATE TRUE
+               WHEN NUM1 = 5
+	                  COMPUTE NUM1 = NUM2 + NUM3
+	                  DISPLAY NUM1
+               WHEN OTHER
+	                  DISPLAY "Condicion no contemplada".
+           END-EVALUATE.
+       TABLA.
+           COMPUTE RESULTADO = NUM1 * MULTIPLICADOR.
+           DISPLAY NUM1 " * " MULTIPLICADOR " = " RESULTADO.
+           ADD 1 TO MULTIPLICADOR.
+       RUTINA01.
+           DISPLAY "SALTO RELATIVO A RUTINA01.".
+           DISPLAY "FUE CERO.".
+       RUTINA02.
+           DISPLAY "SALTO RELATIVO A RUTINA02.".
+           DISPLAY "NO FUE CERO.".
+       FINALIZA-PROGRAMA.
+           DISPLAY "SALTO ABSOLUTO A FINALIZA-PROGRAMA.".
+           STOP RUN.
+
+       END PROGRAM OPERACIONES.
